@@ -1,17 +1,18 @@
 
+import websocket
+import json
+from data import process_data
 
-import asyncio
-import websockets
-from data_processing import process_data
+WEBSOCKET_URL = "wss://functionup.fintarget.in/ws?id=fintarget-functionup"
 
-async def connect_to_websocket():
-    url = "wss://functionup.fintarget.in/ws?id=fintarget-functionup"
+def on_message(ws, message):
+    data = json.loads(message)
+    process_data(data)
 
-    async with websockets.connect(url) as websocket:
-        while True:
-            data = await websocket.recv()
-            process_data(data)
+def connect_to_websocket():
+    ws = websocket.WebSocketApp(WEBSOCKET_URL, on_message=on_message)
+    ws.run_forever()
 
 if __name__ == "__main__":
-    asyncio.run(connect_to_websocket())
+    connect_to_websocket()
 

@@ -1,8 +1,6 @@
-
-
 import csv
 from datetime import datetime
-from moving_average import calculate_moving_average
+from moving import calculate_moving_average  # Update the import statement
 
 def process_data(data):
     for instrument, price in data.items():
@@ -31,4 +29,4 @@ def record_to_csv(instrument, olhc_data):
         writer.writerow([olhc_data["Instrument"], olhc_data["Date"], olhc_data["Time"],
                          olhc_data["Open"], olhc_data["Low"], olhc_data["High"], olhc_data["Close"]])
 
-    calculate_moving_average(csv_file)
+    calculate_moving_average(csv_file)  # Update the function call
